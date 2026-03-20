@@ -1,12 +1,14 @@
 const themeToggle = document.getElementById('themeToggle');
 const storageKey = 'noteflow-theme';
 
-const applyTheme = (theme) => {
+function applyTheme(theme) {
   document.body.classList.toggle('light', theme === 'light');
+
   if (themeToggle) {
-    themeToggle.textContent = theme === 'light' ? '다크 모드 전환' : '라이트 모드 전환';
+    themeToggle.textContent =
+      theme === 'light' ? '다크 모드 전환' : '라이트 모드 전환';
   }
-};
+}
 
 const savedTheme = localStorage.getItem(storageKey);
 if (savedTheme) {
@@ -19,7 +21,10 @@ themeToggle?.addEventListener('click', () => {
   applyTheme(nextTheme);
 });
 
-const form = document.querySelector('form');
+const form =
+  document.querySelector('form') ||
+  document.querySelector('.contact-form') ||
+  document.getElementById('contactForm');
 
 form?.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -27,33 +32,40 @@ form?.addEventListener('submit', async (e) => {
   const formData = new FormData(form);
 
   const payload = {
-    name: formData.get('name'),
-    email: formData.get('email'),
-    interest: formData.get('interest')
+    name: String(formData.get('name') || '').trim(),
+    email: String(formData.get('email') || '').trim(),
+    interest: String(formData.get('interest') || '').trim()
   };
 
+  if (!payload.name || !payload.email) {
+    alert('이름과 이메일을 입력해주세요.');
+    return;
+  }
+
   try {
-    const res = await fetch(`${window.NOTEFLOW_CONFIG.apiBaseUrl}/waitlist`, {
+    const response = await fetch(`${window.NOTEFLOW_CONFIG.apiBaseUrl}/waitlist`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        ...(window.NOTEFLOW_CONFIG.apiKey
-          ? { 'x-api-key': window.NOTEFLOW_CONFIG.apiKey }
-          : {})
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
     });
 
-    const data = await res.json();
+    let data = {};
+    try {
+      data = await response.json();
+    } catch {
+      data = {};
+    }
 
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error(data.message || '요청 실패');
     }
 
     alert('문의가 등록되었습니다.');
     form.reset();
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error('waitlist submit error:', error);
     alert('전송 중 오류가 발생했습니다.');
   }
 });
