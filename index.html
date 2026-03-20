@@ -29,7 +29,7 @@
           <a href="#plans">플랜</a>
           <a href="#api">API</a>
         </div>
-        <a class="nav-cta" href="#aws-connect">AWS 연결</a>
+        <a class="nav-cta" href="#waitlist">도입 문의</a>
       </nav>
 
       <section class="hero" id="top">
@@ -281,51 +281,25 @@
             랜딩 페이지 형태의 웹사이트를 바로 사용할 수 있게 구성했습니다.
           </p>
         </div>
-        <form class="waitlist-form" id="waitlistForm">
+        <form class="waitlist-form">
           <label>
             이름
-            <input name="name" type="text" placeholder="홍길동" required />
+            <input type="text" placeholder="홍길동" />
           </label>
           <label>
             이메일
-            <input name="email" type="email" placeholder="team@example.com" required />
+            <input type="email" placeholder="team@example.com" />
           </label>
           <label>
             관심 항목
-            <select name="interest">
+            <select>
               <option>개인 메모 서비스</option>
               <option>팀 협업 노트</option>
               <option>엔터프라이즈 도입</option>
             </select>
           </label>
-          <button type="submit" class="button primary full">문의 남기기</button>
-          <p class="form-status" id="formStatus">API Gateway URL을 설정하면 이 폼을 바로 AWS로 연결할 수 있습니다.</p>
+          <button type="button" class="button primary full">문의 남기기</button>
         </form>
-      </section>
-
-      <section class="section connect-section" id="aws-connect">
-        <div class="section-heading">
-          <p class="eyebrow">AWS 연결 방법</p>
-          <h2>정적 웹사이트를 실제 AWS 백엔드와 연결하는 권장 구성</h2>
-          <p>
-            이 페이지는 S3 + CloudFront에 배포하고, 폼 제출은 API Gateway와 Lambda로 보내며,
-            인증은 Cognito를 통해 붙이는 방식으로 확장할 수 있습니다.
-          </p>
-        </div>
-        <div class="connect-grid">
-          <article class="feature-card">
-            <h3>1. 정적 배포</h3>
-            <p>`index.html`, `styles.css`, `script.js`를 S3 버킷에 업로드하고 CloudFront를 앞단에 둡니다.</p>
-          </article>
-          <article class="feature-card">
-            <h3>2. API 연결</h3>
-            <p>API Gateway 엔드포인트를 `window.NOTEFLOW_CONFIG.apiBaseUrl`로 주입하면 폼이 Lambda로 POST 됩니다.</p>
-          </article>
-          <article class="feature-card">
-            <h3>3. 인증 연결</h3>
-            <p>Cognito User Pool 정보를 같은 설정 객체에 넣어 로그인 버튼과 보호 API 호출로 확장할 수 있습니다.</p>
-          </article>
-        </div>
       </section>
     </main>
 
@@ -334,7 +308,6 @@
       <button id="themeToggle" class="theme-toggle" type="button">다크 모드 전환</button>
     </footer>
 
-        <script src="aws-config.example.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

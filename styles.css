@@ -370,30 +370,3 @@ button, input, select { font: inherit; }
   .note-grid { grid-template-columns: 1fr; }
   .footer { flex-direction: column; text-align: center; }
 }
-
-
-.connect-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-
-.form-status {
-  margin: 4px 4px 0;
-  color: var(--muted);
-  min-height: 24px;
-}
-
-.form-status.success {
-  color: var(--accent);
-}
-
-.form-status.error {
-  color: #ff8f8f;
-}
-
-@media (max-width: 960px) {
-  .connect-grid {
-    grid-template-columns: 1fr;
-  }
-}
